@@ -1,7 +1,3 @@
-@"C:\Users\Maxhu\Documents\School work\Fall 2021\Database Models 4125\Phase 3\Hu_schema.sql"
-@"C:\Users\Maxhu\Documents\School work\Fall 2021\Database Models 4125\Phase 3\Hu_Inserts.sql"
-
-
 DECLARE 
     
     AvgPriceForAllHomes NUMBER;
