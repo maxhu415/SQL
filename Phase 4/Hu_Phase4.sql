@@ -1,13 +1,10 @@
-@"C:\Users\Maxhu\Documents\School work\Fall 2021\Database Models 4125\Phase 3\Hu_schema.sql"
-@"C:\Users\Maxhu\Documents\School work\Fall 2021\Database Models 4125\Phase 3\Hu_Inserts.sql"
-
 /*Question 1 Retrieve the street address for houses with an agent in the New Orleans office.*/
 SELECT Address
 FROM House, Agent1
 WHERE AgentID = AgID
 AND AgentOffice LIKE '%New Orleans%';
 
-/*Question 2 Retrieve the street address for house which have a seller name that is the same as the listing agentís name.*/
+/*Question 2 Retrieve the street address for house which have a seller name that is the same as the listing agent‚Äôs name.*/
 SELECT Address
 FROM House, Seller, Agent1
 WHERE SellerSSN = SellSSN
@@ -40,7 +37,7 @@ FROM House LEFT OUTER JOIN Buyer
 ON Buyer.AgentID = House.AgentID
 WHERE Buyer.AgentID IS NULL;
 
-/*Question 7 For each agent, retrieve the agentís name and the average commission of all houses they are listing. */
+/*Question 7 For each agent, retrieve the agent‚Äôs name and the average commission of all houses they are listing. */
 SELECT AVG(Commission), AgentName
 FROM Agent1 INNER JOIN House
 ON AgentID = AgID
@@ -66,7 +63,7 @@ ON AgID = AgentID
 GROUP BY AgentName
 HAVING COUNT(AgentID) = 2; 
 
-/*Question 11 For each agent whose average commission is greater than $10K, retrieve the agentís name and the number houses they represent.*/
+/*Question 11 For each agent whose average commission is greater than $10K, retrieve the agent‚Äôs name and the number houses they represent.*/
 SELECT AgentName, COUNT(Address)
 FROM Agent1 RIGHT OUTER JOIN House
 ON AgentID = AgID
@@ -80,24 +77,24 @@ ON Buyer.AgentID = House.AgentID
 AND Price = (SELECT MIN(Price) FROM House)
 GROUP BY BuyerName;
 
-/*Question 13 Retrieve the agentís name and the buyerís name for all agents who are listing a house within the buyerís price range (i.e., house price is between minimum and maximum price range).*/
+/*Question 13 Retrieve the agent‚Äôs name and the buyer‚Äôs name for all agents who are listing a house within the buyer‚Äôs price range (i.e., house price is between minimum and maximum price range).*/
 SELECT AgentName, BuyerName
 FROM Agent1, Buyer, House
 WHERE House.AgentID = AgID
 AND Price BETWEEN BuyerMin AND BuyerMax
 GROUP BY AgentName, BuyerName;
 
-/*Question 14 Find sellers whose SSN number has a pattern 321 repeated twice (sequentially). For example, the query should return sellers with the SSNís ë321-32-145í and ë983-21-3219í, but not ë321-99-3218í.*/
+/*Question 14 Find sellers whose SSN number has a pattern 321 repeated twice (sequentially). For example, the query should return sellers with the SSN‚Äôs ‚Äò321-32-145‚Äô and ‚Äò983-21-3219‚Äô, but not ‚Äò321-99-3218‚Äô.*/
 SELECT SellSSN
 FROM Seller
 WHERE REGEXP_LIKE(SellSSN, '3-?2-?1-?3-?2-?1-?');
 
-/*Question 15 Find agents whose office consists of exactly 2 words. For example, the query should return records for ìMetairie Officeî and ìDowntown Officeî, but not ìUniversity of New Orleans Officeî.*/
+/*Question 15 Find agents whose office consists of exactly 2 words. For example, the query should return records for ‚ÄúMetairie Office‚Äù and ‚ÄúDowntown Office‚Äù, but not ‚ÄúUniversity of New Orleans Office‚Äù.*/
 SELECT AgentName, AgentOffice
 FROM Agent1
 WHERE REGEXP_LIKE (AgentOffice, '^[A-z]+ [A-z]+$');
 
-/*Question 16 Find all houses that include a street number in the street address. For example, the query should return records for ì2000 Lakeshore Driveî and ì1500 Sugar Bowl Driveî but not ìCanal Streetî.*/
+/*Question 16 Find all houses that include a street number in the street address. For example, the query should return records for ‚Äú2000 Lakeshore Drive‚Äù and ‚Äú1500 Sugar Bowl Drive‚Äù but not ‚ÄúCanal Street‚Äù.*/
 SELECT Address
 FROM House
 WHERE REGEXP_LIKE (Address, '[0-9]{3}');
